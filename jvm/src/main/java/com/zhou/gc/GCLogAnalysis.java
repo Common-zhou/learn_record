@@ -36,6 +36,13 @@ public class GCLogAnalysis {
         cache[index] = garbage;
       }
 
+      //// 睡5 ms
+      //try {
+      //  TimeUnit.MILLISECONDS.sleep(1);
+      //} catch (InterruptedException e) {
+      //  e.printStackTrace();
+      //}
+
     }
 
     System.out.println(String.format("总共创建了 %s 个对象", increment.intValue()));
