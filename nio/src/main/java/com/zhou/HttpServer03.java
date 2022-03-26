@@ -9,7 +9,27 @@ import java.util.concurrent.Executors;
 
 /**
  * 多线程去处理
- * sb -u http://localhost:8802 -c 20 -N 60
+ * sb -u http://localhost:8803 -c 20 -N 60
+ *
+ * <pre>
+ *     Status 200:    53271
+ * Status 303:    346
+ *
+ * RPS: 876.5 (requests/second)
+ * Max: 82ms
+ * Min: 0ms
+ * Avg: 21.1ms
+ *
+ *   50%   below 20ms
+ *   60%   below 20ms
+ *   70%   below 20ms
+ *   80%   below 21ms
+ *   90%   below 21ms
+ *   95%   below 22ms
+ *   98%   below 41ms
+ *   99%   below 41ms
+ * 99.9%   below 44ms
+ * </pre>
  *
  * @author zhoubing
  * @date 2022-03-26 16:31
@@ -34,6 +54,7 @@ public class HttpServer03 {
     private static void service(Socket socket) {
         executorService.submit(() -> {
             try {
+                Thread.sleep(20);
                 PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
                 printWriter.println("HTTP/1.1 200 OK");
                 printWriter.println("Content-Type:text/html;charset=utf-8");
@@ -43,7 +64,7 @@ public class HttpServer03 {
                 printWriter.println(body);
                 printWriter.close();
                 socket.close();
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
 
