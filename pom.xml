@@ -12,6 +12,7 @@
         <module>jvm</module>
         <module>effective</module>
         <module>nio</module>
+        <module>nio2</module>
     </modules>
 
     <properties>
