@@ -1,5 +1,7 @@
 package com.zhou.gateway;
 
+import java.util.Arrays;
+
 /**
  *
  * @author zhoubing
@@ -12,12 +14,12 @@ public class V1Gateway {
     public static void main(String[] args) {
 
         String proxyPort = System.getProperty("proxyPort", "9999");
-        String proxyServer = System.getProperty("proxyServer", "http://localhost:9909");
+        String proxyServers = System.getProperty("proxyServer", "http://localhost:9909,http://localhost:8801");
 
         int port = Integer.parseInt(proxyPort);
         System.out.println(GATEWAY_NAME + " " + GATEWAY_VERSION + " starting...");
 
-        HttpServer server = new HttpServer(port, proxyServer);
+        HttpServer server = new HttpServer(port, Arrays.asList(proxyServers.split(",")));
         try {
             server.run();
         } catch (Exception e) {

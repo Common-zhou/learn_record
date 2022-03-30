@@ -10,6 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import java.util.List;
 
 /**
  * @author zhoubing
@@ -17,11 +18,11 @@ import io.netty.handler.logging.LoggingHandler;
  */
 public class HttpServer {
     private int port;
-    private String proxyServer;
+    private List<String> proxyServers;
 
-    public HttpServer(int port, String proxyServer) {
+    public HttpServer(int port, List<String> proxyServers) {
         this.port = port;
-        this.proxyServer = proxyServer;
+        this.proxyServers = proxyServers;
     }
 
     public void run() {
@@ -41,7 +42,7 @@ public class HttpServer {
 
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.DEBUG))
-                .childHandler(new HttpInboundInitializer(this.proxyServer));
+                .childHandler(new HttpInboundInitializer(this.proxyServers));
 
             Channel ch = b.bind(port).sync().channel();
             System.out.println("开启netty http服务器，监听地址和端口为 http://127.0.0.1:" + port + '/');
