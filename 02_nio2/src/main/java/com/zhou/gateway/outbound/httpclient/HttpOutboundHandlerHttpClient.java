@@ -18,7 +18,8 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpUtil;
 import java.io.IOException;
 import java.util.List;
-import org.apache.http.HttpEntity;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -32,6 +33,9 @@ import org.apache.http.util.EntityUtils;
 public class HttpOutboundHandlerHttpClient implements HttpOutboundHandler {
     private List<String> proxyServers;
     private CloseableHttpClient httpclient;
+
+    private ExecutorService executorService = Executors.newFixedThreadPool(8);
+
     private HttpResponseFilter filter;
     private HttpEndpointRouter router;
 
@@ -44,15 +48,25 @@ public class HttpOutboundHandlerHttpClient implements HttpOutboundHandler {
 
     @Override
     public void handle(FullHttpRequest fullHttpRequest, ChannelHandlerContext ctx) {
+
+        String backendUrl = router.route(proxyServers);
+
+        final String url = backendUrl + "/" + fullHttpRequest.uri();
+
+        executorService.submit(() -> fetchGet(fullHttpRequest, ctx, url));
+
+    }
+
+    private void fetchGet(FullHttpRequest fullHttpRequest, ChannelHandlerContext ctx, String url) {
         //这里拿到了请求
         DefaultFullHttpResponse response = null;
         try {
-            response = doHttpRequest(fullHttpRequest, ctx);
+            response = doHttpRequest(url);
             filter.filter(response);
         } catch (IOException e) {
             e.printStackTrace();
             response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
-        }finally {
+        } finally {
             if (fullHttpRequest != null) {
                 if (!HttpUtil.isKeepAlive(fullHttpRequest)) {
                     ctx.write(response).addListener(ChannelFutureListener.CLOSE);
@@ -63,42 +77,21 @@ public class HttpOutboundHandlerHttpClient implements HttpOutboundHandler {
             }
             ctx.flush();
         }
-
-
-
     }
 
-    private DefaultFullHttpResponse doHttpRequest(FullHttpRequest fullHttpRequest, ChannelHandlerContext ctx)
-        throws IOException {
-        String uri = fullHttpRequest.uri();
+    private DefaultFullHttpResponse doHttpRequest(final String url) throws IOException {
 
-        DefaultFullHttpResponse response = null;
-        CloseableHttpResponse endpointResponse = null;
-        try {
+        HttpGet httpGet = new HttpGet(url);
 
-            String route = router.route(this.proxyServers);
+        CloseableHttpResponse endpointResponse = httpclient.execute(httpGet);
 
-            HttpGet httpGet = new HttpGet(route + "/" + uri);
+        byte[] bytes = EntityUtils.toByteArray(endpointResponse.getEntity());
 
-            endpointResponse = httpclient.execute(httpGet);
+        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(bytes));
+        response.headers().set("Content-Type", "application/json");
+        response.headers()
+            .set("Content-Length", Integer.parseInt(endpointResponse.getFirstHeader("Content-Length").getValue()));
 
-            HttpEntity entity1 = endpointResponse.getEntity();
-
-            byte[] bytes = EntityUtils.toByteArray(entity1);
-
-            response =
-                new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(bytes));
-            response.headers().set("Content-Type", "application/json");
-            response.headers()
-                .set("Content-Length", Integer.parseInt(endpointResponse.getFirstHeader("Content-Length").getValue()));
-
-        } catch (Exception e) {
-            response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-            if (endpointResponse != null) {
-                endpointResponse.close();
-            }
-        }
         return response;
     }
 }
