@@ -18,7 +18,8 @@ public class Count1Main {
   private static final int SINGLE_THREAD_INCREMENT_COUNT = 10000;
   //private static Counter counter = new NonSyncCounter();
   //private static Counter counter = new SyncCounter();
-  private static Counter counter = new AtomicCounter();
+  //private static Counter counter = new AtomicCounter();
+  private static Counter counter = new LockCounter();
 
   private static CountDownLatch countDownLatch;
 
