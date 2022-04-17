@@ -1,0 +1,14 @@
+package com.zhou.school;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class School {
+
+    private List<Klass> myClasses;
+}
