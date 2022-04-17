@@ -17,6 +17,8 @@
         <module>04_spring</module>
         <module>04_java8</module>
         <module>04_springboot</module>
+        <module>04_springboot/custom_starter</module>
+        <module>04_springboot/example</module>
     </modules>
 
     <properties>
