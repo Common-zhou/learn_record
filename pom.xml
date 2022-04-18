@@ -19,6 +19,7 @@
         <module>04_springboot</module>
         <module>04_springboot/custom_starter</module>
         <module>04_springboot/example</module>
+        <module>04_springboot/homework</module>
     </modules>
 
     <properties>

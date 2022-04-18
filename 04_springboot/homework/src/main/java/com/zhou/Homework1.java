@@ -1,4 +1,4 @@
-package com.zhou.homework;
+package com.zhou;
 
 /**
  * 1. 总结一下，单例的各种写法，比较它们的优劣。

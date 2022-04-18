@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author zhoubing
- * @date 2022-04-13 23:21
+ * @date 2022-04-18 23:43
  */
 @SpringBootApplication
-public class SpringBootDemo {
+public class MainStarter {
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootDemo.class, args);
+        SpringApplication.run(MainStarter.class);
     }
 }
