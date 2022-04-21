@@ -21,6 +21,7 @@
         <module>04_springboot/example</module>
         <module>04_springboot/homework</module>
         <module>05_mysql</module>
+        <module>reg_learn</module>
     </modules>
 
     <properties>
