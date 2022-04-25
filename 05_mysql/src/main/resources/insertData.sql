@@ -12,4 +12,5 @@ END WHILE ;
 commit;
 END ;;
 
+DELIMITER ;
 call insert_user();
