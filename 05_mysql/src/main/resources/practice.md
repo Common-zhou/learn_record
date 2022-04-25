@@ -46,8 +46,20 @@ echo $insert_sql > b.sql
 time mysql -uroot -p123 test -e"source b.sql"
 ```
 
+### debugbox实验
 | 插入方式             | 耗时            |
 |------------------|---------------|
 | 单条插入(自动提交)       | 9min20s(560s) |
 | 单条插入(一个事务)       | 2min20s(140s) |
-| insert 跟多个values | 11s           |    
+| insert 跟多个values | 11s              |    
+
+
+### 本机实验
+| 插入方式             | 耗时            |
+|------------------|---------------|
+| 单条插入(自动提交)       | 3min8s(188s) |
+| 单条插入(一个事务)       | 1min2s(62s) |
+| insert 跟多个values | 7s              |    
+
+1kw。批量插入速度：2min19s(139s)
+7.19w/s
