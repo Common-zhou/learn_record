@@ -1,8 +1,7 @@
 package com.zhou;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import com.zhou.utils.JdbcUtil;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,18 +42,6 @@ public class Homework6 {
             }
         }
 
-    }
-
-    public static HikariDataSource getDataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setDataSourceClassName("com.mysql.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://192.168.8.132:3306/test");
-        config.addDataSourceProperty("port", 3306);
-        config.addDataSourceProperty("user", "root");
-        config.addDataSourceProperty("password", "123456");
-
-        HikariDataSource dataSource = new HikariDataSource(config);
-        return dataSource;
     }
 
     public static void insertData(Connection connection) throws SQLException {

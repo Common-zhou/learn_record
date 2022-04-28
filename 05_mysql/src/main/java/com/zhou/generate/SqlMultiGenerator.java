@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class SqlMultiGenerator {
   public static void main(String[] args) throws IOException {
-    int length = 1_000_000;
+    int length = 1_00_000;
 
     int batch_size = 10000;
 
