@@ -12,7 +12,7 @@ public class MysqlFetchGapData implements FetchGapData {
     public Ranger fetchGap(int gap) {
         Ranger ranger = null;
         try {
-            ranger = ForLock.lockForUnique(gap);
+            ranger = ForLock.getUniqueNonOverLappingRanger(gap);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new RuntimeException("can't get gap data");

@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class IdGenerator {
 
-    private static final int GAP = 100;
+    private static final int GAP = 2000;
     private static final int THREAD_SIZE = 100;
 
     private static AtomicLong generateNum = new AtomicLong(0);
@@ -28,7 +28,7 @@ public class IdGenerator {
         public void run() {
             for (int i = 0; i < 100; i++) {
                 Ranger ranger = fetchGapData.fetchGap(GAP);
-                for (int j = ranger.getMax(); j <= ranger.getMax(); j++) {
+                for (int j = ranger.getMin(); j <= ranger.getMax(); j++) {
                     generateNum.incrementAndGet();
                     map.put(j, objectVal);
                 }
