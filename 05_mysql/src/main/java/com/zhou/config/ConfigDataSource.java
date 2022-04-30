@@ -35,4 +35,16 @@ public class ConfigDataSource {
         return new HikariDataSource(config);
     }
 
+    @Bean
+    public HikariDataSource slaveDataSource1() {
+        HikariConfig config = new HikariConfig();
+        config.setDriverClassName("com.mysql.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://192.168.8.132:3304/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false");
+        config.addDataSourceProperty("port", 3306);
+        config.addDataSourceProperty("user", "root");
+        config.addDataSourceProperty("password", "123456");
+
+        return new HikariDataSource(config);
+    }
+
 }
