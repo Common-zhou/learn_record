@@ -22,6 +22,7 @@
         <module>04_springboot/homework</module>
         <module>05_mysql</module>
         <module>reg_learn</module>
+        <module>05_mysql/shardingsphere</module>
     </modules>
 
     <properties>
