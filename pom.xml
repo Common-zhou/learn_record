@@ -23,6 +23,7 @@
         <module>05_mysql</module>
         <module>reg_learn</module>
         <module>05_mysql/shardingsphere</module>
+        <module>05_mysql/shardingsphere-proxy</module>
     </modules>
 
     <properties>
