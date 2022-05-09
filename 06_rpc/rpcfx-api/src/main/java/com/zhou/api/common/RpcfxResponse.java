@@ -19,5 +19,5 @@ public class RpcfxResponse {
     /**
      * 如果有异常。使用这个带回来
      */
-    private Exception exception;
+    private String exception;
 }
