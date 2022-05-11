@@ -25,6 +25,7 @@
         <module>05_mysql/shardingsphere</module>
         <module>05_mysql/shardingsphere-proxy</module>
         <module>06_rpc</module>
+        <module>06_dubbo</module>
     </modules>
 
     <properties>
