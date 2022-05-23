@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zhou.api.common.RpcfxRequest;
 import com.zhou.api.common.RpcfxResponse;
-import com.zhou.util.HttpRpcInvoker;
+import com.zhou.netty.NettyClientMain;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -42,7 +42,9 @@ public class InvocationProxy {
             rpcfxRequest.setParams(args);
             rpcfxRequest.setMethodName(method.getName());
 
-            RpcfxResponse rpcfxResponse = HttpRpcInvoker.post(url, rpcfxRequest);
+//            RpcfxResponse rpcfxResponse = HttpRpcInvoker.post(url, rpcfxRequest);
+
+            RpcfxResponse rpcfxResponse = NettyClientMain.post(url, rpcfxRequest);
 
             if (rpcfxResponse.getStatus() != 0) {
                 System.out.println(rpcfxResponse.getException());

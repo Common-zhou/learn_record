@@ -1,11 +1,10 @@
 package com.zhou.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.zhou.api.common.RpcfxRequest;
 import com.zhou.api.common.RpcfxResponse;
 import com.zhou.api.service.OrderService;
 import com.zhou.api.service.UserService;
+import com.zhou.invoker.InvokeBySpring;
 import com.zhou.service.OrderServiceImpl;
 import com.zhou.service.UserServiceImpl;
 import org.springframework.beans.BeansException;
@@ -15,10 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * @author zhoubing
@@ -36,43 +31,8 @@ public class ServerController implements ApplicationContextAware {
 
     @PostMapping("/")
     public RpcfxResponse invoke(@RequestBody RpcfxRequest rpcfxRequest) {
-        String className = rpcfxRequest.getServiceClass();
-        String methodName = rpcfxRequest.getMethodName();
-
-        RpcfxResponse response = new RpcfxResponse();
-
-        try {
-            Object bean = applicationContext.getBean(className);
-            Method method = resolveMethod(bean, methodName);
-
-            Object result = method.invoke(bean, rpcfxRequest.getParams());
-
-            response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
-            response.setStatus(0);
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setException(e.toString());
-            response.setStatus(100);
-            return response;
-        }
-
-
-    }
-
-    /**
-     * 这个方法目前只能找到方法，但是无法找到对应参数的方法。需要注意
-     * @param bean
-     * @param methodName
-     * @return
-     */
-    private Method resolveMethod(Object bean, String methodName) {
-        Optional<Method> optional = Arrays.stream(bean.getClass().getMethods()).filter(
-            method -> method.getName().equals(methodName)).findFirst();
-        if (optional.isPresent()){
-            return optional.get();
-        }
-        throw new IllegalArgumentException(String.format("no such method.[bean=%s, methodName=%s]", bean, methodName));
+        InvokeBySpring invoker = applicationContext.getBean(InvokeBySpring.class);
+        return invoker.invoke(rpcfxRequest);
     }
 
     @Bean(name = "com.zhou.api.service.UserService")

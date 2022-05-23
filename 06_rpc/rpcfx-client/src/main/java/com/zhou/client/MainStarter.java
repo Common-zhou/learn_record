@@ -14,7 +14,7 @@ import com.zhou.api.service.UserService;
 public class MainStarter {
     public static void main(String[] args) {
 
-        ProxyFactory.ProxyEnum proxyEnum = ProxyFactory.ProxyEnum.AOP;
+        ProxyFactory.ProxyEnum proxyEnum = ProxyFactory.ProxyEnum.DYNAMIC;
 
         UserService userService = ProxyFactory.createProxy(UserService.class, "http://localhost:8080", proxyEnum);
 

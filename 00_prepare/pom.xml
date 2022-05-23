@@ -35,15 +35,8 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jdbc</artifactId>
-            <version>1.0.2.RELEASE_WITH_SA_PATCH</version>
+            <version>1.1.13.RELEASE</version>
         </dependency>
-
-
-<!--        <dependency>-->
-<!--            <groupId>com.zaxxer</groupId>-->
-<!--            <artifactId>HikariCP</artifactId>-->
-<!--            <version>4.0.3</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>com.mchange</groupId>
