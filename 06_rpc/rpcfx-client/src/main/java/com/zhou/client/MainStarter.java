@@ -16,19 +16,21 @@ public class MainStarter {
 
         ProxyFactory.ProxyEnum proxyEnum = ProxyFactory.ProxyEnum.DYNAMIC;
 
-        UserService userService = ProxyFactory.createProxy(UserService.class, "http://localhost:8080", proxyEnum);
+        String url = "http://localhost:8088";
+
+        UserService userService = ProxyFactory.createProxy(UserService.class, url, proxyEnum);
 
         User byId = userService.findById(1);
         System.out.println(byId);
 
 
-        OrderService orderService = ProxyFactory.createProxy(OrderService.class, "http://localhost:8080", proxyEnum);
+        OrderService orderService = ProxyFactory.createProxy(OrderService.class, url, proxyEnum);
         Order order = orderService.createOrder(10086);
         System.out.println(order);
 
 
         // 这个调用会报错。因为对面没有实现。
-        ErrorService errorService = ProxyFactory.createProxy(ErrorService.class, "http://localhost:8080", proxyEnum);
+        ErrorService errorService = ProxyFactory.createProxy(ErrorService.class, url, proxyEnum);
         errorService.invoke();
 
 

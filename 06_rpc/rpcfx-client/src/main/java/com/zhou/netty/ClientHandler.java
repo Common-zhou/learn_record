@@ -1,26 +1,27 @@
 package com.zhou.netty;
 
-import com.zhou.api.common.RpcfxResponse;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.ReferenceCountUtil;
+import lombok.Data;
 
-public class ClientHandler extends SimpleChannelInboundHandler<RpcfxResponse> {
+@Data
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-    //处理服务端返回的数据
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, RpcfxResponse response) throws Exception {
-        System.out.println("接受到server响应数据: " + response.toString());
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-    }
+    private String respStr;
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        ctx.close();
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        try {
+            ByteBuf bb = (ByteBuf)msg;
+            byte[] respByte = new byte[bb.readableBytes()];
+            bb.readBytes(respByte);
+            setRespStr(new String(respByte));
+            System.err.println("client--收到响应：" + respStr);
+        } finally{
+            // 必须释放msg数据
+            ReferenceCountUtil.release(msg);
+        }
     }
-
-
 }

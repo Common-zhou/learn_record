@@ -5,7 +5,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.zhou.api.common.RpcfxRequest;
 import com.zhou.api.common.RpcfxResponse;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
 import java.io.IOException;
@@ -39,13 +38,16 @@ public class NettyClientMain {
     }
 
     private static void connect(Bootstrap bootstrap, RpcfxRequest request) throws InterruptedException {
-        bootstrap.connect("localhost", 8088).addListener(future -> {
-            System.out.println("future状态 :" + future.isSuccess());
-            if (future.isSuccess()) {
-                Channel channel = ((ChannelFuture) future).channel();
-                channel.writeAndFlush(JSON.toJSONString(request, SerializerFeature.WriteClassName));
-            }
-        }).sync();
+        System.out.println("======== connect ============= ");
+
+        ChannelFuture cf = bootstrap.connect("localhost", 8088).sync();
+        ClientHandler clientHandler = new ClientHandler();
+
+        cf.channel().writeAndFlush(JSON.toJSONString(request, SerializerFeature.WriteClassName));
+        cf.channel().closeFuture().sync();
+        String respJson = clientHandler.getRespStr();
+        System.out.println("resp json: " + respJson);
+
     }
 
 }

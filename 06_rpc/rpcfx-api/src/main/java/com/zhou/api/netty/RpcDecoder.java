@@ -21,6 +21,8 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        System.out.println("decode----------");
+
         if (in.readableBytes() < 4) {
             // 因为我们第一个字节是长度，所以不满int 不接受请求
             return;
