@@ -1,0 +1,13 @@
+
+
+spring:
+  application:
+    name: dubbo-order
+  main:
+    allow-bean-definition-overriding: true
+#    web-application-type: none
+dubbo:
+  registry:
+    address: zookeeper://192.168.8.132:2181
+server:
+  port: 10089
