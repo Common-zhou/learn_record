@@ -1,9 +1,7 @@
 package com.zhou.controller;
 
-import com.zhou.model.InventoryDto;
-import com.zhou.service.AccountService;
-import com.zhou.service.InventoryService;
-import org.apache.dubbo.config.annotation.DubboReference;
+import com.zhou.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,21 +16,13 @@ import java.math.BigDecimal;
 @RestController
 public class OrderController {
 
-    @DubboReference
-    private AccountService accountService;
-
-    @DubboReference
-    private InventoryService inventoryService;
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping("/order")
     public String order(@RequestParam("money") BigDecimal money, @RequestParam("count") Integer count) {
 
-        String result = accountService.orderPay(money, count);
-
-        accountService.updateAccount(null);
-
-        InventoryDto inventoryDto = inventoryService.findById(110);
-        System.out.println(inventoryDto);
+        String result = orderService.orderPay(money, count);
 
         return "Ok";
     }

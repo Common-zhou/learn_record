@@ -4,6 +4,7 @@ import com.zhou.model.AccountDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,4 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface AccountMapper {
     @Select("select * from account where id=#{id}")
     AccountDto findById(@Param("id") int id);
+
+    @Update("update account set balance=balance-#{balance}, update_time=#{updateTime} where id=#{id}")
+    int update(AccountDto dto);
 }

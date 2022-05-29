@@ -20,4 +20,10 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryDto findById(int id) {
         return mapper.findById(id);
     }
+
+    @Override
+    public boolean updateInventory(InventoryDto inventoryDto) {
+        int affectRow = mapper.update(inventoryDto);
+        return affectRow == 1;
+    }
 }

@@ -60,12 +60,15 @@ insert into inventory(id, name,email, count) values (110, "肥皂", "6666@qq.com
 create database zhou_order;
 use zhou_order;
 
+drop table if exists `order`;
+
 CREATE TABLE `order` (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	account_id int not null COMMENT '下单人id',
     inventory_id int not null COMMENT '库存id（sku）',
-	consume decimal(10,0) COMMENT '花费钱数',
-	amount int COMMENT '订单个数',
+	total_amount decimal(10,0) COMMENT '花费钱数',
+	count int COMMENT '订单个数',
+    status varchar(50) COMMENT '订单状态 SUCCESS,FAILURE',
 	create_time datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 );

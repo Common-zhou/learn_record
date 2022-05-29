@@ -6,8 +6,6 @@ import com.zhou.service.AccountService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
-
 /**
  * @author zhoubing
  * @date 2022-05-28 22:09
@@ -20,16 +18,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean updateAccount(AccountDto dto) {
-        AccountDto byId = accountMapper.findById(1);
-        System.out.println(byId);
-
-        return false;
+        int affectRow = accountMapper.update(dto);
+        return affectRow == 1;
     }
 
-    @Override
-    public String orderPay(BigDecimal money, Integer count) {
-
-
-        return null;
-    }
 }

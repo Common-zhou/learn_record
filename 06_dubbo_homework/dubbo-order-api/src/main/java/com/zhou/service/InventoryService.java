@@ -8,4 +8,6 @@ import com.zhou.model.InventoryDto;
  */
 public interface InventoryService {
     InventoryDto findById(int id);
+
+    boolean updateInventory(InventoryDto inventoryDto);
 }

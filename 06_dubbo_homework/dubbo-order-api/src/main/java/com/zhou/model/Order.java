@@ -5,22 +5,27 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * @author zhoubing
- * @date 2022-05-28 22:37
+ * @date 2022-05-29 20:20
  */
 @Data
 @Builder
 @Accessors(chain = true)
-public class InventoryDto implements Serializable {
+public class Order implements Serializable {
     private int id;
-    private String name;
-    private String email;
+    private int accountId;
+    private int inventoryId;
+    private BigDecimal totalAmount;
     private int count;
+    private String status;
     private Date createTime;
     private Date updateTime;
 
+    public enum OrderStatus {
+        SUCCESS, FAILURE, UNPAID, CANCEL
+    }
 }
-

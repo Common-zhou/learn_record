@@ -13,4 +13,13 @@ public interface OrderService {
      * @return
      */
     boolean order(BigDecimal costMoney, int count);
+
+    /**
+     * 正常下单流程
+     *
+     * @param money 耗费钱数
+     * @param count 下单数量
+     * @return
+     */
+    String orderPay(BigDecimal money, Integer count);
 }
