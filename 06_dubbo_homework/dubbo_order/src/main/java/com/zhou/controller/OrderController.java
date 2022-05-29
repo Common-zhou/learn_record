@@ -2,7 +2,6 @@ package com.zhou.controller;
 
 import com.zhou.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,16 +20,14 @@ public class OrderController {
 
     @RequestMapping("/order")
     public String order(@RequestParam("money") BigDecimal money, @RequestParam("count") Integer count) {
-
         String result = orderService.orderPay(money, count);
-
         return "Ok";
     }
 
 
-    @GetMapping("/test1")
-    public String order() {
-        System.out.println("===============");
+    @RequestMapping("/order_pay_exception")
+    public String orderPayException(@RequestParam("money") BigDecimal money, @RequestParam("count") Integer count) {
+        String result = orderService.orderPayException(money, count);
         return "Ok";
     }
 

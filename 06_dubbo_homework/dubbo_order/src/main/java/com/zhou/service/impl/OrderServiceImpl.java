@@ -1,13 +1,9 @@
 package com.zhou.service.impl;
 
 import com.zhou.mapper.OrderMapper;
-import com.zhou.model.AccountDto;
-import com.zhou.model.InventoryDto;
 import com.zhou.model.Order;
-import com.zhou.service.AccountService;
-import com.zhou.service.InventoryService;
 import com.zhou.service.OrderService;
-import org.apache.dubbo.config.annotation.DubboReference;
+import com.zhou.service.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +17,8 @@ import java.util.Date;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @DubboReference
-    private AccountService accountService;
-
-    @DubboReference
-    private InventoryService inventoryService;
+    @Autowired
+    private PayService payService;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -35,28 +28,20 @@ public class OrderServiceImpl implements OrderService {
         return false;
     }
 
-
     @Override
     public String orderPay(BigDecimal money, Integer count) {
         Order order = builderOrder(money, count);
         int affectRows = orderMapper.save(order);
-
-        accountService.updateAccount(buildAccountDto(money));
-
-        inventoryService.updateInventory(buildInventoryDto(count));
-
+        payService.payOrder(order);
         return "success";
     }
 
-    private InventoryDto buildInventoryDto(Integer count) {
-        return InventoryDto.builder().id(110).count(count).updateTime(new Date()).build();
-    }
-
-    private AccountDto buildAccountDto(BigDecimal money) {
-
-        AccountDto accountDto = AccountDto.builder().id(1).balance(money).updateTime(new Date()).build();
-
-        return accountDto;
+    @Override
+    public String orderPayException(BigDecimal money, Integer count) {
+        Order order = builderOrder(money, count);
+        int affectRows = orderMapper.save(order);
+        payService.payOrderAccountException(order);
+        return "failed";
     }
 
     private Order builderOrder(BigDecimal money, Integer count) {

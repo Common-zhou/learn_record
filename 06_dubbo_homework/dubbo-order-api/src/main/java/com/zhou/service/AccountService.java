@@ -8,4 +8,6 @@ import com.zhou.model.AccountDto;
  */
 public interface AccountService {
     boolean updateAccount(AccountDto dto);
+
+    boolean updateAccountWithException(AccountDto dto);
 }

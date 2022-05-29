@@ -22,4 +22,13 @@ public interface OrderService {
      * @return
      */
     String orderPay(BigDecimal money, Integer count);
+
+    /**
+     * 支付时出现异常
+     *
+     * @param money
+     * @param count
+     * @return
+     */
+    String orderPayException(BigDecimal money, Integer count);
 }

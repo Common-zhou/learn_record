@@ -1,7 +1,9 @@
 package com.zhou.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.Date;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 public class Order implements Serializable {
     private int id;
@@ -26,6 +30,6 @@ public class Order implements Serializable {
     private Date updateTime;
 
     public enum OrderStatus {
-        SUCCESS, FAILURE, UNPAID, CANCEL
+        PAY_SUCCESS, FAILURE, UNPAID, CANCEL
     }
 }

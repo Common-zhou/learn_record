@@ -22,4 +22,8 @@ public class AccountServiceImpl implements AccountService {
         return affectRow == 1;
     }
 
+    @Override
+    public boolean updateAccountWithException(AccountDto dto) {
+        throw new RuntimeException("更新库存失败");
+    }
 }

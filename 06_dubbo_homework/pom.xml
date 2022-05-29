@@ -22,7 +22,7 @@
         <curator.version>5.1.0</curator.version>
         <dubbo.version>2.6.5</dubbo.version>
         <mysql.version>5.1.47</mysql.version>
-        <hmily.version>2.1.2-SNAPSHOT</hmily.version>
+        <hmily.version>2.1.1</hmily.version>
         <curator.version>2.13.0</curator.version>
         <lombok.version>1.18.12</lombok.version>
         <dubbo-springboot.version>2.7.15</dubbo-springboot.version>
@@ -74,6 +74,11 @@
             <dependency>
                 <groupId>org.dromara</groupId>
                 <artifactId>hmily-spring-boot-starter-dubbo</artifactId>
+                <version>${hmily.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dromara</groupId>
+                <artifactId>hmily-spring-boot-starter-apache-dubbo</artifactId>
                 <version>${hmily.version}</version>
             </dependency>
         </dependencies>
