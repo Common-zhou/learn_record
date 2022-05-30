@@ -19,9 +19,9 @@
 
 
 ```sql
-create database zhou_account;
 use zhou_account;
 
+drop table if exists account;
 CREATE TABLE account (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	name varchar(255),
@@ -41,11 +41,14 @@ insert into account(id, name,email, balance, freeze_amount) values (1, "zhoubing
 create database zhou_inventory;
 use zhou_inventory;
 
+drop table if exists zhou_inventory.`inventory`;
+
 CREATE TABLE inventory (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	name varchar(255),
 	email varchar(255),
 	count int COMMENT '库存数量',
+    `freeze_count` int COMMENT '冻结数量',
 	create_time datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 );

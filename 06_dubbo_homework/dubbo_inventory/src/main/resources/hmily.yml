@@ -1,7 +1,7 @@
 hmily:
   server:
     configMode: local
-    appName: dubbo-order
+    appName: dubbo-inventory
   #  如果server.configMode eq local 的时候才会读取到这里的配置信息.
   config:
     appName: order-dubbo
@@ -74,7 +74,7 @@ repository:
 metrics:
   metricsName: prometheus
   host:
-  port: 9093
+  port: 9092
   async: true
   threadCount : 16
   jmxConfig:

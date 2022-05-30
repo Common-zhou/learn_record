@@ -23,6 +23,7 @@ public class InventoryDto implements Serializable {
     private String name;
     private String email;
     private int count;
+    private int freezeCount;
     private Date createTime;
     private Date updateTime;
 

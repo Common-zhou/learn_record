@@ -17,6 +17,12 @@ public interface AccountMapper {
     @Select("select * from account where id=#{id}")
     AccountDto findById(@Param("id") int id);
 
-    @Update("update account set balance=balance-#{balance}, update_time=#{updateTime} where id=#{id}")
+    @Update("update account set balance=balance-#{balance},freeze_amount=freeze_amount + #{balance}, update_time = #{updateTime} where id=#{id}")
     int update(AccountDto dto);
+
+    @Update("update account set freeze_amount=freeze_amount-#{balance}, update_time=#{updateTime} where id=#{id}")
+    int confirm(AccountDto dto);
+
+    @Update("update account set balance=balance+#{balance},freeze_amount=freeze_amount - #{balance}, update_time=#{updateTime} where id=#{id}")
+    int cancel(AccountDto dto);
 }

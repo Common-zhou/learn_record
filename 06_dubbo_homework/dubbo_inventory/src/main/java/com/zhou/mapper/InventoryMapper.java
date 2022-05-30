@@ -15,6 +15,12 @@ public interface InventoryMapper {
     @Select("select * from inventory where id=#{id}")
     InventoryDto findById(@Param("id") int id);
 
-    @Update("update inventory set count=count-#{count}, update_time=#{updateTime} where id=#{id}")
+    @Update("update inventory set count=count-#{count},freeze_count=freeze_count+#{count},update_time=#{updateTime} where id=#{id}")
     int update(InventoryDto inventoryDto);
+
+    @Update("update inventory set freeze_count=freeze_count-#{count},update_time=#{updateTime} where id=#{id}")
+    int confirm(InventoryDto dto);
+
+    @Update("update inventory set count=count+#{count},freeze_count=freeze_count-#{count},update_time=#{updateTime} where id=#{id}")
+    int cancel(InventoryDto dto);
 }
