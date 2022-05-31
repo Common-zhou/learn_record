@@ -77,3 +77,11 @@ CREATE TABLE `order` (
 );
 ```
 
+
+
+### swagger地址：
+
+替换order的地址
+
+`http://localhost:10089/swagger-ui.html`
+
