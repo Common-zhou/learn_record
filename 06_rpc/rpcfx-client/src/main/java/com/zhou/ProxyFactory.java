@@ -1,6 +1,5 @@
 package com.zhou;
 
-import com.zhou.proxy.CglibProxy;
 import com.zhou.proxy.InvocationProxy;
 
 /**
@@ -17,8 +16,6 @@ public class ProxyFactory {
         if (proxyEnum == null || ProxyEnum.DYNAMIC.equals(proxyEnum)) {
             // 默认是动态代理
             return InvocationProxy.create(serviceClass, url);
-        } else if (ProxyEnum.AOP.equals(proxyEnum)) {
-            return CglibProxy.create(serviceClass, url);
         }
         return null;
 
