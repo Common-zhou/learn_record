@@ -28,6 +28,7 @@
         <module>06_rpc</module>
         <module>06_dubbo</module>
         <module>06_dubbo_homework</module>
+        <module>07_cache</module>
     </modules>
 
     <properties>
