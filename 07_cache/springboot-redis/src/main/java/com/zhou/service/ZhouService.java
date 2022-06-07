@@ -10,4 +10,6 @@ public interface ZhouService {
     ZhouUser findById(int id);
 
     int insertUser(ZhouUser zhouUser);
+
+    int updateUser(ZhouUser zhouUser);
 }

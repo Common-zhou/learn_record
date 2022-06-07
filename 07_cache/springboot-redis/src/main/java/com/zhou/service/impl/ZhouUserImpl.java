@@ -23,6 +23,13 @@ public class ZhouUserImpl implements ZhouService {
 
     @Override
     public int insertUser(ZhouUser zhouUser) {
-        return zhouMapper.insert(zhouUser);
+        int affectUser = zhouMapper.insert(zhouUser);
+        return zhouUser.getId();
+    }
+
+    @Override
+    public int updateUser(ZhouUser zhouUser) {
+        int affectUser = zhouMapper.update(zhouUser);
+        return zhouUser.getId();
     }
 }
