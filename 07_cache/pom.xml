@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>springboot-redis</module>
+        <module>redic_connect</module>
     </modules>
 
     <properties>

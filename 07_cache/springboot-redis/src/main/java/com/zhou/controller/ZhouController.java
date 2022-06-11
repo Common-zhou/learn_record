@@ -23,7 +23,7 @@ public class ZhouController {
      * @url http://localhost:8080/user/get?id=1
      */
     @GetMapping("/user/get")
-    @Cacheable(cacheNames = "zhouUser", key = "#id")
+    @Cacheable(cacheNames = "zhouCache", key = "#id")
     public ZhouUser findById(@RequestParam("id") int id) {
         System.out.println("id======" + id);
         return zhouService.findById(id);

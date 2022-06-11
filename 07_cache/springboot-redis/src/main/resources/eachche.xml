@@ -6,7 +6,7 @@
                   overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
                   timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" />
     <cache
-            name="userCache"
+            name="zhouCache"
             maxElementsInMemory="1000"
             eternal="false"
             timeToIdleSeconds="300"
