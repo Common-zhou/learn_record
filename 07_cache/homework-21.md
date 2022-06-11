@@ -2,7 +2,7 @@
 
 ​	[操作记录](redis_operate.md) 
 
-- [ ] 2、（选做）分别基于jedis，RedisTemplate，Lettuce，Redission实现redis基本操作 
+- [x] 2、（选做）分别基于jedis，RedisTemplate，Lettuce，Redission实现redis基本操作 
 
 的demo，可以使用spring-boot集成上述工具。 
 

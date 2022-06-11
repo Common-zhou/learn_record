@@ -11,5 +11,7 @@ public interface ZhouService {
 
     int insertUser(ZhouUser zhouUser);
 
-    int updateUser(ZhouUser zhouUser);
+    ZhouUser updateUser(ZhouUser zhouUser);
+
+    int deleteUser(int id);
 }

@@ -21,4 +21,6 @@ public interface ZhouMapper {
     @Insert("update zhou set username=#{username} ,password=#{password}, salt=#{salt} where id =#{id}")
     int update(ZhouUser zhouUser);
 
+    @Delete("delete from zhou where id = #{id}")
+    int delete(@Param("id") int id);
 }

@@ -28,8 +28,13 @@ public class ZhouUserImpl implements ZhouService {
     }
 
     @Override
-    public int updateUser(ZhouUser zhouUser) {
+    public ZhouUser updateUser(ZhouUser zhouUser) {
         int affectUser = zhouMapper.update(zhouUser);
-        return zhouUser.getId();
+        return zhouUser;
+    }
+
+    @Override
+    public int deleteUser(int id) {
+        return zhouMapper.delete(id);
     }
 }
