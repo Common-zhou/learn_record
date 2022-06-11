@@ -6,7 +6,7 @@
 
 的demo，可以使用spring-boot集成上述工具。 
 
-- [ ] 3、（选做）spring集成练习: 
+- [x] 3、（选做）spring集成练习: 
 
 1）实现update方法，配合@CachePut 
 
@@ -14,7 +14,7 @@
 
 3）将示例中的spring集成Lettuce改成jedis或redisson。 
 
-- [ ] 4、（必做）基于Redis封装分布式数据操作： 
+- [ ] 4、（必做）基于Redis封装分布式数据操作：  
 
 1）在Java中实现一个简单的分布式锁； 
 
