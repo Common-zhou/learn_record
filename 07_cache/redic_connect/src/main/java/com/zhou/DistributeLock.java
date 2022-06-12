@@ -1,5 +1,7 @@
 package com.zhou;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -13,15 +15,17 @@ import java.util.concurrent.TimeUnit;
  * @author zhoubing
  * @date 2022-06-11 19:56
  */
-public class DistributeLockTest {
+@Component
+public class DistributeLock {
 
     ThreadLocal<String> distributeLockValue = new ThreadLocal<>();
 
-    JedisPool jedisPool = new JedisPool("192.168.8.132", 6379);
+    @Autowired
+    JedisPool jedisPool;
 
     public static void main(String[] args) {
 
-        final DistributeLockTest distributeLockTest = new DistributeLockTest();
+        final DistributeLock distributeLock = new DistributeLock();
         // lua脚本执行
         //distributeLockTest.lua("zhangsan", "lisi", "100");
 
@@ -32,7 +36,7 @@ public class DistributeLockTest {
             String lockKey = "distribute_key" + "1";
 
             executorService.submit(() -> {
-                boolean getLock = distributeLockTest.tryLock(lockKey, 30);
+                boolean getLock = distributeLock.tryLock(lockKey, 30);
                 if (getLock) {
                     // 拿到锁了
                     System.out.println(Thread.currentThread().getName() + " === got lock");
@@ -43,7 +47,7 @@ public class DistributeLockTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } finally {
-                        distributeLockTest.releaseLock(lockKey);
+                        distributeLock.releaseLock(lockKey);
                     }
 
                 } else {

@@ -18,6 +18,8 @@
 
 1）在Java中实现一个简单的分布式锁； 
 
+[redis分布式锁](https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/)
+
 2）在Java中实现一个分布式计数器，模拟减库存。 
 
 - [ ] 5、基于Redis的PubSub实现订单异步处理
