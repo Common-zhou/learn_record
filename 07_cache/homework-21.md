@@ -14,7 +14,7 @@
 
 3）将示例中的spring集成Lettuce改成jedis或redisson。 
 
-- [ ] 4、（必做）基于Redis封装分布式数据操作：  
+- [x] 4、（必做）基于Redis封装分布式数据操作：  
 
 1）在Java中实现一个简单的分布式锁； 
 
