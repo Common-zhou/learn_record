@@ -29,6 +29,8 @@
         <module>06_dubbo</module>
         <module>06_dubbo_homework</module>
         <module>07_cache</module>
+        <module>08_mq</module>
+        <module>08_mq/activemq</module>
     </modules>
 
     <properties>
