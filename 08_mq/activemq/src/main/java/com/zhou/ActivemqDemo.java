@@ -4,12 +4,13 @@ import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.command.ActiveMQTopic;
+import org.apache.activemq.command.ActiveMQQueue;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -24,15 +25,20 @@ import javax.jms.TextMessage;
 public class ActivemqDemo {
 
   public static void main(String[] args) throws JMSException, InterruptedException {
-    thread(new ActiveMQProducer(), false);
-    thread(new ActiveMQProducer(), false);
-    thread(new ActiveMQProducer(), false);
-    thread(new ActiveMQConsumer(), false);
+    String url = "tcp://127.0.0.1:61616";
+    String destinationStr = "test.topic";
 
-    thread(new ActiveMQProducer(), false);
-    thread(new ActiveMQProducer(), false);
+    //Destination destination = new ActiveMQTopic(destinationStr);
+    Destination destination = new ActiveMQQueue(destinationStr);
 
-    //thread(new ActiveMQConsumer(), false);
+    thread(new ActiveMQProducer(url, destination), false);
+    thread(new ActiveMQProducer(url, destination), false);
+    thread(new ActiveMQProducer(url, destination), false);
+    thread(new ActiveMQConsumer(url, destination), false);
+
+    thread(new ActiveMQProducer(url, destination), false);
+    thread(new ActiveMQProducer(url, destination), false);
+
     TimeUnit.SECONDS.sleep(2);
   }
 
@@ -43,16 +49,25 @@ public class ActivemqDemo {
   }
 
   public static class ActiveMQProducer implements Runnable {
+
+    private final String url;
+    private final Destination destination;
+
+    public ActiveMQProducer(String url, Destination destination) {
+      this.url = url;
+      this.destination = destination;
+    }
+
     @Override
     public void run() {
       try {
-        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://127.0.0.1:61616");
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(url);
 
         ActiveMQConnection conn = (ActiveMQConnection) factory.createConnection();
         conn.start();
         Session session = conn.createSession(false, AUTO_ACKNOWLEDGE);
 
-        Destination topic = new ActiveMQTopic("test.topic");
+        Destination topic = destination;
 
         MessageProducer producer = session.createProducer(topic);
 
@@ -70,26 +85,35 @@ public class ActivemqDemo {
 
 
   public static class ActiveMQConsumer implements Runnable {
+
+    private final String url;
+    private final Destination destination;
+
+    public ActiveMQConsumer(String url, Destination destination) {
+      this.url = url;
+      this.destination = destination;
+    }
+
     @Override
     public void run() {
       try {
-        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://127.0.0.1:61616");
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(url);
 
         ActiveMQConnection conn = (ActiveMQConnection) factory.createConnection();
         conn.start();
         Session session = conn.createSession(false, AUTO_ACKNOWLEDGE);
 
-        Destination topic = new ActiveMQTopic("test.topic");
+        //Destination topic = new ActiveMQTopic(destination);
+        Destination topic = destination;
+
 
         MessageConsumer consumer = session.createConsumer(topic);
 
-        //Message message = consumer.receive(1000);
-        //
-        //System.out.println("got message :[ " + message + " ]");
+        // 消费消息
+        //consumeMessage(consumer);
 
-        consumer.setMessageListener(message -> System.out.println("got message:" + message));
-
-        TimeUnit.SECONDS.sleep(1000);
+        // 这是个listener 会一直监听 所以不用循环 这个是等着推送
+        addListinerAndSleep(consumer);
 
         consumer.close();
         session.close();
@@ -98,6 +122,16 @@ public class ActivemqDemo {
       } catch (Exception e) {
         e.printStackTrace();
       }
+    }
+
+    private void consumeMessage(MessageConsumer consumer) throws JMSException {
+      Message message = consumer.receive(1000);
+      System.out.println("got message :[ " + message + " ]");
+    }
+
+    private void addListinerAndSleep(MessageConsumer consumer) throws JMSException, InterruptedException {
+      consumer.setMessageListener(message -> System.out.println("got message:" + message));
+      TimeUnit.SECONDS.sleep(1000);
     }
   }
 }
