@@ -6,7 +6,6 @@ import com.zhou.model.MUserTag;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.ResultSet;
